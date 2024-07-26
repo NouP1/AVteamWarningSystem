@@ -20,7 +20,7 @@ const urls = [
 async function checkUrls() {
 
  for (let { url, name } of urls) {
-     try { 
+    
             const response = await axios.get(url);
             if (response.status !== 200 && url !== 'http://185.117.91.209/admin') {
                 await bot.sendMessage(channelID, `Ошибка: ${name} (${url}) вернул статус ${response.status}`);
@@ -35,9 +35,7 @@ async function checkUrls() {
                 }
             }
           
-        } catch (error) {
-            await bot.sendMessage(channelID, `Ошибка: ${name} (${url}) недоступен. Ошибка: ${error.message}`);
-        }
+   
     }
 
     }
