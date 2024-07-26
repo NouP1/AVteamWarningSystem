@@ -7,7 +7,7 @@ const moment = require('moment');
 
 const token = process.env.TOKEN;
 const channelID = '-1002223805659'
-const now = moment().format('YYYY-MM-DD HH:mm:ss')
+
 
 const bot = new TelegramApi(token, { polling: true });
 
@@ -98,12 +98,14 @@ function checkDomainExpirations() {
 }
 // Запускаем проверку URL каждую минуту
 cron.schedule('*/1 * * * *', () => {
+    const now = moment().format('YYYY-MM-DD HH:mm:ss')
     checkUrls();
     console.log('Проверка URL выполнена  '+now);
 });
 
 
 cron.schedule('0 9  * * *', () => {
+        const now = moment().format('YYYY-MM-DD HH:mm:ss')
         checkDomainExpirations();
         console.log('----------------------------------------------------------------\nПроверка сроков оплаты доменов выполнена  '+now +'\n----------------------------------------------------------------');
     });
