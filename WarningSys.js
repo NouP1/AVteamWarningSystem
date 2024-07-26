@@ -20,10 +20,19 @@ const urls = [
 async function checkUrls() {
 
  for (let { url, name } of urls) {
-        try {
+     try { 
             const response = await axios.get(url);
-            if (response.status !== 200) {
+            if (response.status !== 200 && url !== 'http://185.117.91.209/admin') {
                 await bot.sendMessage(channelID, `Ошибка: ${name} (${url}) вернул статус ${response.status}`);
+            } else {
+                if (url === 'http://185.117.91.209/admin' && response.status !== 200) {
+                     // Проверка наличия элемента <app-login>
+                     if (response.data.includes('<app-login')) {
+                        await bot.sendMessage(channelID, `Оповещение: ${name} (${url}) доступен и требует авторизации.`);
+                    } else {
+                        await bot.sendMessage(channelID, `Ошибка: ${name} (${url}) не содержит форму авторизации.`);
+                    } 
+                }
             }
           
         } catch (error) {
@@ -82,7 +91,7 @@ function checkDomainExpirations() {
 }
 }
 // Запускаем проверку URL каждую минуту
-cron.schedule('*/5 * * * *', () => {
+cron.schedule('*/1 * * * *', () => {
     checkUrls();
     console.log('Проверка URL выполнена  '+now);
 });
