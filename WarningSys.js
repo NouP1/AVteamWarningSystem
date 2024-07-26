@@ -25,7 +25,7 @@ async function checkUrls() {
             if (response.status !== 200 && url !== 'http://185.117.91.209/admin') {
                 await bot.sendMessage(channelID, `Ошибка: ${name} (${url}) вернул статус ${response.status}`);
             } else {
-                if (url === 'http://185.117.91.209/admin' && response.status !== 200) {
+                if (url === 'http://185.117.91.209/admin') {
                      // Проверка наличия элемента <app-login>
                      if (response.data.includes('<app-login')) {
                         await bot.sendMessage(channelID, `Оповещение: ${name} (${url}) доступен и требует авторизации.`);
