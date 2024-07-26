@@ -82,7 +82,7 @@ function checkDomainExpirations() {
 }
 }
 // Запускаем проверку URL каждую минуту
-cron.schedule('*/1 * * * *', () => {
+cron.schedule('*/5 * * * *', () => {
     checkUrls();
     console.log('Проверка URL выполнена  '+now);
 });
