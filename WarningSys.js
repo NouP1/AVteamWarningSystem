@@ -34,11 +34,9 @@ async function checkUrls() {
         } catch (error) {
             if (url==='http://185.117.91.209/admin') {
 
-                  if (error.response.data.includes('<app-login')) {
-                        await bot.sendMessage(channelID, `Оповещение: ${name} (${url}) доступен и требует авторизации.`);
-                    } else {
-                        await bot.sendMessage(channelID, `Ошибка: ${name} (${url}) не содержит форму авторизации.`);
-                    } 
+                if (error.response && error.response.data && !error.response.data.includes('<app-login')) {
+                    await bot.sendMessage(channelID, `Ошибка: ${name} (${url}) не содержит форму авторизации\n ${JSON.stringify(error.response, null, 2)}`);
+                }
             } else {
                 await bot.sendMessage(channelID, `Ошибка: ${name} (${url}) недоступен. Ошибка: ${error.message}`);
             }
@@ -97,7 +95,7 @@ function checkDomainExpirations() {
 }
 }
 // Запускаем проверку URL каждую минуту
-cron.schedule('*/1 * * * *', () => {
+cron.schedule('*/3 * * * *', () => {
     const now = moment().format('YYYY-MM-DD HH:mm:ss')
     checkUrls();
     console.log('Проверка URL выполнена  '+now);
