@@ -20,22 +20,30 @@ const urls = [
 async function checkUrls() {
 
  for (let { url, name } of urls) {
-    
+     try { 
             const response = await axios.get(url);
             if (response.status !== 200 && url !== 'http://185.117.91.209/admin') {
                 await bot.sendMessage(channelID, `Ошибка: ${name} (${url}) вернул статус ${response.status}`);
             } else {
                 if (url === 'http://185.117.91.209/admin') {
                      // Проверка наличия элемента <app-login>
-                     if (response.data.includes('<app-login')) {
+                   
+                }
+            }
+          
+        } catch (error) {
+            if (url==='http://185.117.91.209/admin') {
+
+                  if (error.response.data.includes('<app-login')) {
                         await bot.sendMessage(channelID, `Оповещение: ${name} (${url}) доступен и требует авторизации.`);
                     } else {
                         await bot.sendMessage(channelID, `Ошибка: ${name} (${url}) не содержит форму авторизации.`);
                     } 
-                }
+            } else {
+                await bot.sendMessage(channelID, `Ошибка: ${name} (${url}) недоступен. Ошибка: ${error.message}`);
             }
-          
-   
+            
+        }
     }
 
     }
