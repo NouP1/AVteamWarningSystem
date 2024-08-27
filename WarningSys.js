@@ -12,7 +12,7 @@ const channelID = '-1002223805659'
 const bot = new TelegramApi(token, { polling: true });
 
 const urls = [
-    { url: 'http://185.81.114.84/index', name: 'Бином v2' },
+    // { url: 'http://185.81.114.84/panel/login', name: 'Бином v2' },
     { url: 'http://185.117.91.209/admin', name: 'Кейтаро' },
     { url: 'http://185.80.53.80/n7crq.php', name: 'Основной Бином' }
 ];
@@ -94,7 +94,7 @@ function checkDomainExpirations() {
 
 }
 }
-// Запускаем проверку URL каждую минуту
+
 cron.schedule('*/3 * * * *', () => {
     const now = moment().format('YYYY-MM-DD HH:mm:ss')
     checkUrls();
